@@ -1,8 +1,8 @@
 import { Project } from "./project.js";
 
 const displayProject = (proj) => {
-  const doc = document.querySelector("body");
   const projectSpace = document.createElement("div");
+  const toDoSpace = document.createElement("div");
   const projectName = document.createElement("h2");
   projectName.textContent = proj.name;
   const newBtn = document.createElement("button");
@@ -10,41 +10,76 @@ const displayProject = (proj) => {
   newBtn.textContent = "New ToDo";
 
   //Create project on page
-  doc.appendChild(projectSpace);
+  document.body.appendChild(projectSpace);
   projectSpace.appendChild(projectName);
+  projectSpace.appendChild(toDoSpace);
   projectSpace.appendChild(newBtn);
 
   const displayToDos = () => {
     proj.todos.forEach((todo) => {
       const todoCard = document.createElement("div");
       todoCard.className = "todo-card";
+
       const tdTitle = document.createElement("h4");
       tdTitle.className = "title";
       tdTitle.textContent = todo.title;
-      projectName.appendChild(todoCard);
-      projectName.appendChild(tdTitle);
+
+      const tdDesc = document.createElement("p");
+      tdDesc.className = "description";
+      tdDesc.textContent = todo.description;
+
+      toDoSpace.appendChild(todoCard);
+      toDoSpace.appendChild(tdTitle);
+      toDoSpace.appendChild(tdDesc);
+    });
+  };
+
+  const createToDoForm = () => {
+    const form = document.createElement("form");
+
+    const toDoTitleInput = document.createElement("input");
+    toDoTitleInput.type = "text";
+    toDoTitleInput.id = "title";
+    toDoTitleInput.name = "title";
+
+    const toDoDescInput = document.createElement("textarea");
+    toDoDescInput.id = "description";
+    toDoDescInput.name = "description";
+
+    const addToDoBtn = document.createElement("button");
+    addToDoBtn.type = "submit";
+    addToDoBtn.textContent = "Add ToDo";
+
+    projectSpace.appendChild(form);
+    form.appendChild(toDoTitleInput);
+    form.appendChild(toDoDescInput);
+    form.appendChild(addToDoBtn);
+
+    //Write form values as todo properties
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      //Maybe needs refactor per SOLID?
+      proj.addToDo(toDoTitleInput.value, toDoDescInput.value);
+      console.log(proj.todos[0]);
+      displayToDos();
+      e.target.hidden = true;
     });
   };
 
   //Create new todo as form
   newBtn.addEventListener("click", () => {
-    const enterToDo = document.createElement("form");
-    const enterToDoTitle = document.createElement("input");
-    enterToDoTitle.type = "text";
-    enterToDoTitle.id = "title";
-    enterToDoTitle.name = "title";
-    projectSpace.appendChild(enterToDo);
-    enterToDo.appendChild(enterToDoTitle);
-
-    //Write form values as todo properties
-    enterToDo.addEventListener("submit", (e) => {
-      e.preventDefault();
-      proj.newToDo(enterToDoTitle.value);
-      displayToDos();
-      e.target.hidden = true;
-    });
+    createToDoForm();
   });
 };
 
 const initProject = new Project("Project");
 displayProject(initProject);
+
+/*
+
+We'll also need a new project button that, when clicked:
+- creates a project form (enter a name)
+- creates the new project
+- displays the new project
+
+*/

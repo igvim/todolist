@@ -7,8 +7,8 @@ export class Project {
 
   todos = [];
 
-  newToDo = (title) => {
-    const todo = new ToDo(title);
+  addToDo = (title, description, dueDate, priority) => {
+    const todo = new ToDo(title, description, dueDate, priority);
     this.todos.push(todo);
   };
 }
