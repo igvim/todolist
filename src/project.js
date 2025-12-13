@@ -5,10 +5,10 @@ export class Project {
     this.name = name;
   }
 
-  project = [];
+  todos = [];
 
   newToDo = (title) => {
     const todo = new ToDo(title);
-    this.project.push(todo);
+    this.todos.push(todo);
   };
 }
