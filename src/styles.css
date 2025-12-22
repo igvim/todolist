@@ -1,0 +1,12 @@
+.todo-card {
+  display: grid;
+  grid-template-columns: 25px 50px;
+  gap: 5px;
+  margin: 10px;
+}
+
+.todo-text {
+  display: grid;
+  grid-template-rows: 20px 50px;
+  gap: 10px
+}

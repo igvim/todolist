@@ -18,6 +18,13 @@ export const displayProject = (proj) => {
       const todoCard = document.createElement("div");
       todoCard.className = "todo-card";
 
+      const tdIsDone = document.createElement("input");
+      tdIsDone.type = "checkbox";
+      tdIsDone.className = "status";
+
+      const tdTextSpace = document.createElement("div");
+      tdTextSpace.className = "todo-text";
+
       const tdTitle = document.createElement("h4");
       tdTitle.className = "title";
       tdTitle.textContent = todo.title;
@@ -27,8 +34,10 @@ export const displayProject = (proj) => {
       tdDesc.textContent = todo.description;
 
       toDoSpace.appendChild(todoCard);
-      toDoSpace.appendChild(tdTitle);
-      toDoSpace.appendChild(tdDesc);
+      todoCard.appendChild(tdIsDone);
+      todoCard.appendChild(tdTextSpace);
+      tdTextSpace.appendChild(tdTitle);
+      tdTextSpace.appendChild(tdDesc);
     });
   };
 

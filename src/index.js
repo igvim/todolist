@@ -1,3 +1,4 @@
+import "./styles.css";
 import { Project } from "./project.js";
 import { displayProject } from "./displayProject.js";
 
