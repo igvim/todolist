@@ -23,6 +23,7 @@ export const displayProject = (proj) => {
       const tdIsDone = document.createElement("input");
       tdIsDone.type = "checkbox";
       tdIsDone.className = "status";
+      tdIsDone.checked = todo.isDone;
 
       const tdTextSpace = document.createElement("div");
       tdTextSpace.className = "todo-text";

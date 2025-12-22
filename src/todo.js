@@ -9,4 +9,8 @@ export default class ToDo {
     // Priorities = Urgent, Important, Both
     this.priority = priority;
   }
+
+  get isDone() {
+    return true;
+  }
 }
