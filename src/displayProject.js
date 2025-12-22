@@ -15,7 +15,8 @@ export const displayProject = (proj) => {
 
   const displayToDos = () => {
     toDoSpace.innerHTML = "";
-    proj.todos.forEach((todo) => {
+    let todos = proj.fetchToDos();
+    todos.forEach((todo) => {
       //Create todo elements
       const todoCard = document.createElement("div");
       todoCard.className = "todo-card";
@@ -72,9 +73,8 @@ export const displayProject = (proj) => {
     //Write form values as todo properties
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      //Maybe needs refactor per SOLID?
+      //Maybe needs refactor per SOLID? YES because I'm fucked up now adding localStorage
       proj.addToDo(toDoTitleInput.value, toDoDescInput.value);
-      console.log(proj.todos[0]);
       displayToDos();
       e.target.hidden = true;
     });
@@ -84,4 +84,6 @@ export const displayProject = (proj) => {
   newBtn.addEventListener("click", () => {
     createToDoForm();
   });
+
+  return { displayToDos };
 };
