@@ -14,7 +14,9 @@ export const displayProject = (proj) => {
   projectSpace.appendChild(newBtn);
 
   const displayToDos = () => {
+    toDoSpace.innerHTML = "";
     proj.todos.forEach((todo) => {
+      //Create todo elements
       const todoCard = document.createElement("div");
       todoCard.className = "todo-card";
 
@@ -33,6 +35,7 @@ export const displayProject = (proj) => {
       tdDesc.className = "description";
       tdDesc.textContent = todo.description;
 
+      //Reset todo DOM
       toDoSpace.appendChild(todoCard);
       todoCard.appendChild(tdIsDone);
       todoCard.appendChild(tdTextSpace);
