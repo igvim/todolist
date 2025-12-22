@@ -23,6 +23,9 @@ export const displayProject = (proj) => {
       const tdIsDone = document.createElement("input");
       tdIsDone.type = "checkbox";
       tdIsDone.className = "status";
+      tdIsDone.addEventListener("change", function () {
+        todo.isDone = this.checked;
+      });
       tdIsDone.checked = todo.isDone;
 
       const tdTextSpace = document.createElement("div");

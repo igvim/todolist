@@ -11,6 +11,10 @@ export default class ToDo {
   }
 
   get isDone() {
-    return true;
+    return this._isDone;
+  }
+
+  set isDone(val) {
+    this._isDone = val;
   }
 }
