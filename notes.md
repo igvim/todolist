@@ -12,6 +12,10 @@
 
 Displaying checked status currently works because I'm iterating over an array of objects. I need to figure out how to write the checked state without using an object method, so that can be written to localStorage, and once I do that I just figure out the reverse to get back my array of objects.
 
+I was not writing the checked state because I was only writing todos when they were first added - every change means a new write to the db.
+
+- Figure out whether I can reduce sources of truth?
+
 ## new-projects
 
 We'll also need a new project button that, when clicked:
