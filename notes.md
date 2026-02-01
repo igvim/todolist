@@ -33,6 +33,12 @@ It doesn't make sense for the todo form to depend on the project, but it does fo
 - create new projects
 - fetch existing projects
 
+## solid-refactor
+
+- still need to:
+  - use my append framework (keep created DOM objects next to where they're added)
+  - clean up writeDone/Changes to remove further dependencies
+
 ## takeaways
 
 - event listener callback function _must_ take in the event parameter, even if you do nothing with it. you can access properties of the event target with e.currentTarget
