@@ -1,34 +1,28 @@
 export const displayProject = (proj) => {
-  const projectSpace = document.createElement("div");
-  const toDoSpace = document.createElement("div");
-  const projectName = document.createElement("h2");
-  projectName.textContent = proj.name;
-  const newBtn = document.createElement("button");
-  newBtn.id = "new";
-  newBtn.textContent = "New ToDo";
-
-  //Create project on page
-  document.body.appendChild(projectSpace);
-  projectSpace.appendChild(projectName);
-  projectSpace.appendChild(toDoSpace);
-  projectSpace.appendChild(newBtn);
-
-  const displayToDos = () => {
-    toDoSpace.innerHTML = "";
-    let todos = proj.fetchToDos();
+  const displayToDos = (proj) => {
+    //Populate the todo space with todos
+    const tdSpace = document.getElementById("todo-space");
+    tdSpace.innerHTML = "";
+    const todos = proj.fetchToDos();
+    const writeChanges = (project = proj, tdArr = todos) => {
+      localStorage.setItem(project.name, JSON.stringify(tdArr));
+    };
     todos.forEach((todo) => {
+      const writeDone = (td, checkboxEl) => {
+        td.isDone = checkboxEl.checked;
+        writeChanges();
+      };
       //Create todo elements
       const todoCard = document.createElement("div");
       todoCard.className = "todo-card";
 
-      const tdIsDone = document.createElement("input");
-      tdIsDone.type = "checkbox";
-      tdIsDone.className = "status";
-      tdIsDone.addEventListener("change", function () {
-        todo.isDone = this.checked;
-        localStorage.setItem(proj.name, JSON.stringify(todos));
+      const tdCheckbox = document.createElement("input");
+      tdCheckbox.type = "checkbox";
+      tdCheckbox.className = "status";
+      tdCheckbox.addEventListener("change", (e) => {
+        writeDone(todo, tdCheckbox);
       });
-      tdIsDone.checked = todo.isDone;
+      tdCheckbox.checked = todo.isDone;
 
       const tdTextSpace = document.createElement("div");
       tdTextSpace.className = "todo-text";
@@ -42,15 +36,15 @@ export const displayProject = (proj) => {
       tdDesc.textContent = todo.description;
 
       //Reset todo DOM
-      toDoSpace.appendChild(todoCard);
-      todoCard.appendChild(tdIsDone);
+      tdSpace.appendChild(todoCard);
+      todoCard.appendChild(tdCheckbox);
       todoCard.appendChild(tdTextSpace);
       tdTextSpace.appendChild(tdTitle);
       tdTextSpace.appendChild(tdDesc);
     });
   };
 
-  const createToDoForm = () => {
+  const createToDoForm = (proj) => {
     const form = document.createElement("form");
 
     const toDoTitleInput = document.createElement("input");
@@ -74,17 +68,29 @@ export const displayProject = (proj) => {
     //Write form values as todo properties
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      //Maybe needs refactor per SOLID? YES because I'm fucked up now adding localStorage
       proj.addToDo(toDoTitleInput.value, toDoDescInput.value);
-      displayToDos();
+      displayToDos(proj);
       e.target.hidden = true;
     });
   };
 
-  //Create new todo as form
-  newBtn.addEventListener("click", () => {
-    createToDoForm();
-  });
+  const projectSpace = document.createElement("div");
+  document.body.appendChild(projectSpace);
 
-  return { displayToDos };
+  const projectName = document.createElement("h2");
+  projectName.textContent = proj.name;
+  projectSpace.appendChild(projectName);
+
+  const toDoSpace = document.createElement("div");
+  toDoSpace.id = "todo-space";
+  projectSpace.appendChild(toDoSpace);
+  displayToDos(proj);
+
+  const newBtn = document.createElement("button");
+  newBtn.id = "new";
+  newBtn.textContent = "New ToDo";
+  newBtn.addEventListener("click", (e) => {
+    createToDoForm(proj);
+  });
+  projectSpace.appendChild(newBtn);
 };

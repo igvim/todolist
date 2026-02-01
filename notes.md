@@ -23,3 +23,11 @@ We'll also need a new project button that, when clicked:
 - creates a project form (enter a name)
 - creates the new project
 - displays the new project
+
+refactoring was indeed a good idea, because now I more clearly see the way all the functions depend on having the project data. The new ToDo button has a form that should write new app data and refresh the page with the new data. The displayed todos will include multiple elements that, when changed, should write to the database, and displaying these states shouldn't be too entangled with changing them.
+
+I imagine this will get worse when I create new projects - I'll want to display all of them upon loading the page, but also be able to delete individual projects (requiring an ID). So projects will have an id and a list of todos.
+
+## takeaways
+
+- event listener callback function _must_ take in the event parameter, even if you do nothing with it. you can access properties of the event target with e.currentTarget
