@@ -1,7 +1,7 @@
 import "./styles.css";
-import { Project } from "./project.js";
+import { ProjectManager } from "./projectManager.js";
 import { displayProject } from "./displayProject.js";
 
 //localStorage.clear();
-const initProject = new Project("Project");
-displayProject(initProject);
+ProjectManager.createProject("Project", "0");
+displayProject(0);

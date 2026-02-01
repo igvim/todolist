@@ -28,6 +28,12 @@ refactoring was indeed a good idea, because now I more clearly see the way all t
 
 I imagine this will get worse when I create new projects - I'll want to display all of them upon loading the page, but also be able to delete individual projects (requiring an ID). So projects will have an id and a list of todos.
 
+It doesn't make sense for the todo form to depend on the project, but it does for display To Dos. I'll want a function within displayToDos that can fetch the project from some other controller. I only have one project now, but eventually I'll have an array of them. I'll want to be able to get projects from that array by ID. So the project manager should:
+
+- create new projects
+- fetch existing projects
+
 ## takeaways
 
 - event listener callback function _must_ take in the event parameter, even if you do nothing with it. you can access properties of the event target with e.currentTarget
+- localStorage requires a string to identify the stored object. I'm using number ids so I can (eventually) delete individual projects, so I needed a getter property to create a string version of that same id. It's probably messy to do this this way, but I think with a first class storage system I would create more unique ids as strings, similar to ids I've seen in objects at work. This technically means the source of truth for projects is in my app rather than in storage, and I'm only pulling individual projects from storage one at a time.
