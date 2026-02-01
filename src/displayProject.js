@@ -26,6 +26,7 @@ export const displayProject = (proj) => {
       tdIsDone.className = "status";
       tdIsDone.addEventListener("change", function () {
         todo.isDone = this.checked;
+        localStorage.setItem(proj.name, JSON.stringify(todos));
       });
       tdIsDone.checked = todo.isDone;
 
