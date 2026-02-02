@@ -3,48 +3,45 @@ import { ProjectManager } from "./projectManager";
 export const displayProject = (projId) => {
   const project = ProjectManager.fetchProject(projId);
 
+  const writeChange = () => {
+    localStorage.setItem(project.stringId, JSON.stringify(project.todos));
+  };
+
   const displayToDos = () => {
     //Populate the todo space with todos
     const tdSpace = document.getElementById("todo-space");
     tdSpace.innerHTML = "";
 
     const todos = project.fetchToDos();
-    const writeChanges = (proj = project, tdArr = todos) => {
-      localStorage.setItem(proj.stringId, JSON.stringify(tdArr));
-    };
+
     todos.forEach((todo) => {
-      const writeDone = (td, checkboxEl) => {
-        td.isDone = checkboxEl.checked;
-        writeChanges();
-      };
       //Create todo elements
       const todoCard = document.createElement("div");
       todoCard.className = "todo-card";
+      tdSpace.appendChild(todoCard);
 
       const tdCheckbox = document.createElement("input");
       tdCheckbox.type = "checkbox";
       tdCheckbox.className = "status";
       tdCheckbox.addEventListener("change", (e) => {
-        writeDone(todo, tdCheckbox);
+        todo.isDone = tdCheckbox.checked;
+        writeChange();
       });
       tdCheckbox.checked = todo.isDone;
+      todoCard.appendChild(tdCheckbox);
 
       const tdTextSpace = document.createElement("div");
       tdTextSpace.className = "todo-text";
+      todoCard.appendChild(tdTextSpace);
 
       const tdTitle = document.createElement("h4");
       tdTitle.className = "title";
       tdTitle.textContent = todo.title;
+      tdTextSpace.appendChild(tdTitle);
 
       const tdDesc = document.createElement("p");
       tdDesc.className = "description";
       tdDesc.textContent = todo.description;
-
-      //Reset todo DOM
-      tdSpace.appendChild(todoCard);
-      todoCard.appendChild(tdCheckbox);
-      todoCard.appendChild(tdTextSpace);
-      tdTextSpace.appendChild(tdTitle);
       tdTextSpace.appendChild(tdDesc);
     });
   };
